@@ -24,4 +24,10 @@ fun updateWord(word: Word)
 @Query("DELETE FROM Word")
 fun deleteTable()
 
+@Query("SELECT * FROM Word WHERE word IN (:engWord)" )
+fun findEnglishWord(engWord:String):Word
+
+@Query("SELECT * FROM Word WHERE meaning IN(:persianWord)")
+fun findPersianWord(persianWord:String):Word
+
 }

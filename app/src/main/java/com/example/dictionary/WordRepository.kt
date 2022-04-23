@@ -28,6 +28,14 @@ object WordRepository {
         wordDao.deleteWord(wordName)
     }
 
+    fun findEngWordByName(name: String):Word{
+        return wordDao.findEnglishWord(name)
+    }
+
+    fun findPersianWordByName(name: String):Word{
+        return wordDao.findPersianWord(name)
+    }
+
 
 
 
