@@ -35,4 +35,8 @@ class MainViewModel (app: Application) : AndroidViewModel(app){
         return WordRepository.findPersianWordByName(name)
     }
 
+    fun findWordByID(id:Int):Word{
+        return WordRepository.findWordByID(id)
+    }
+
 }

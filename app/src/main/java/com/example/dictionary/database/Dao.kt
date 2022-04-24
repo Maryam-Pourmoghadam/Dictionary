@@ -30,4 +30,6 @@ fun findEnglishWord(engWord:String):Word
 @Query("SELECT * FROM Word WHERE meaning IN(:persianWord)")
 fun findPersianWord(persianWord:String):Word
 
+@Query("SELECT * FROM Word WHERE id IN (:wordID)")
+fun findByID(wordID:Int):Word
 }

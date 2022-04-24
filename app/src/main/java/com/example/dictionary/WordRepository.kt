@@ -36,6 +36,10 @@ object WordRepository {
         return wordDao.findPersianWord(name)
     }
 
+    fun findWordByID(id:Int):Word{
+        return wordDao.findByID(id)
+    }
+
 
 
 

@@ -1,14 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#B2EBF2"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10sp"
     tools:context=".AddWordFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5sp"
+        android:padding="10sp"
+        android:text="لغت (انگلیسی) :"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold|italic" />
+
+    <EditText
+        android:id="@+id/editText_word"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20sp"
+        android:background="@drawable/round_corner_shape"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:padding="16sp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5sp"
+        android:padding="10sp"
+        android:text="معنی (فارسی) :"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold|italic" />
+
+    <EditText
+        android:id="@+id/editText_meaning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20sp"
+        android:background="@drawable/round_corner_shape"
+        android:digits="ابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:padding="16sp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5sp"
+        android:padding="10sp"
+        android:text="مترادف :"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold|italic" />
+
+    <EditText
+        android:id="@+id/editText_synonym"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20sp"
+        android:background="@drawable/round_corner_shape"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:padding="16sp" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5sp"
+        android:padding="10sp"
+        android:text="مثال :"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold|italic" />
+
+    <EditText
+        android:id="@+id/editText_example"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30sp"
+        android:background="@drawable/round_corner_shape"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:padding="16sp" />
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ذخیره"
+        app:cornerRadius="50sp" />
+
+
+</LinearLayout>
