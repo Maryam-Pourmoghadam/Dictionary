@@ -15,8 +15,8 @@ fun wordCount():LiveData<Int>
 @Insert(onConflict = OnConflictStrategy.REPLACE)
 fun insertWord(word: Word)
 
-@Query("DELETE FROM Word WHERE word=:wordName")
-fun deleteWord(wordName:String)
+@Query("DELETE FROM Word WHERE id=:wordID")
+fun deleteWord(wordID:Int)
 
 @Update
 fun updateWord(word: Word)
@@ -32,4 +32,7 @@ fun findPersianWord(persianWord:String):Word
 
 @Query("SELECT * FROM Word WHERE id IN (:wordID)")
 fun findByID(wordID:Int):Word
+
+@Query("SELECT COUNT(*) FROM Word")
+fun getNumberOfWords():Int?
 }

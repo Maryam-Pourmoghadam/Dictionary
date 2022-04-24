@@ -24,8 +24,12 @@ object WordRepository {
         wordDao.insertWord(word)
     }
 
-    fun deleteWord(wordName: String){
-        wordDao.deleteWord(wordName)
+    fun updateWord(word: Word){
+        wordDao.updateWord(word)
+    }
+
+    fun deleteWord(wordID: Int){
+        wordDao.deleteWord(wordID)
     }
 
     fun findEngWordByName(name: String):Word{
@@ -38,6 +42,10 @@ object WordRepository {
 
     fun findWordByID(id:Int):Word{
         return wordDao.findByID(id)
+    }
+
+    fun getNumOfWords():Int?{
+        return wordDao.getNumberOfWords()
     }
 
 

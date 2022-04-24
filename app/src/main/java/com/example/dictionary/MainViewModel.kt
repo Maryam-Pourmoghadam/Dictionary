@@ -11,6 +11,7 @@ class MainViewModel (app: Application) : AndroidViewModel(app){
 
     init {
             WordRepository.initDB(app)
+        wordsCounterLiveData.value= getNumberOfWords()
     }
 
     fun getAllWords(): LiveData<List<Word>> {
@@ -22,9 +23,13 @@ class MainViewModel (app: Application) : AndroidViewModel(app){
         wordsCounterLiveData.value=wordsCounterLiveData.value?.plus(1)
     }
 
-    fun deleteWord(wordName: String){
-        WordRepository.deleteWord(wordName)
+    fun deleteWord(wordID: Int){
+        WordRepository.deleteWord(wordID)
         wordsCounterLiveData.value=wordsCounterLiveData.value?.minus(1)
+    }
+
+    fun updateWord(word: Word){
+        WordRepository.updateWord(word)
     }
 
     fun findEngWordByName(name: String): Word {
@@ -37,6 +42,10 @@ class MainViewModel (app: Application) : AndroidViewModel(app){
 
     fun findWordByID(id:Int):Word{
         return WordRepository.findWordByID(id)
+    }
+
+    fun getNumberOfWords():Int?{
+        return WordRepository.getNumOfWords()
     }
 
 }
