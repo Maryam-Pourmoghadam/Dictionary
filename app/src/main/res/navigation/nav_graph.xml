@@ -45,5 +45,19 @@
         <action
             android:id="@+id/action_wordDetailsFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_wordDetailsFragment_to_wikipediaWebViewFragment"
+            app:destination="@id/wikipediaWebViewFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/wikipediaWebViewFragment"
+        android:name="com.example.dictionary.WikipediaWebViewFragment"
+        android:label="fragment_wikipedia_web_view"
+        tools:layout="@layout/fragment_wikipedia_web_view" >
+        <argument
+            android:name="link"
+            app:argType="string"
+            android:defaultValue=""/>
     </fragment>
 </navigation>

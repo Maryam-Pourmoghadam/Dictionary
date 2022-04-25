@@ -53,14 +53,17 @@ class WordDetailsFragment : Fragment() {
         }
 
         binding.buttonWikipedia.setOnClickListener {
-            showWebView=(!showWebView)
+            val link=vmodel.findWordByID(wordID).wikipediaLink
+            val action =WordDetailsFragmentDirections.actionWordDetailsFragmentToWikipediaWebViewFragment(link)
+            findNavController().navigate(action)
+            /*showWebView=(!showWebView)
             if (showWebView){
                 webView.visibility = View.VISIBLE
                 //webView.isVerticalScrollBarEnabled = true
                 webView.loadUrl(vmodel.findWordByID(wordID).wikipediaLink)
             }else{
                 webView.visibility = View.GONE
-            }
+            }*/
 
         }
     }
