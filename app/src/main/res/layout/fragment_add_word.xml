@@ -90,7 +90,7 @@
         android:id="@+id/editText_example"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10sp"
+        android:layout_marginBottom="30sp"
         android:background="@drawable/round_corner_shape"
         android:ems="10"
         android:inputType="textPersonName"
