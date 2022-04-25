@@ -9,3 +9,9 @@ data class Word(@PrimaryKey(autoGenerate = true)val id:Int,
                 var example:String,var wikipediaLink:String=""
                 ,var isFavorite:Boolean=false
 )
+{
+    init {
+        wikipediaLink="https://en.wikipedia.org/wiki/$word"
+
+    }
+}

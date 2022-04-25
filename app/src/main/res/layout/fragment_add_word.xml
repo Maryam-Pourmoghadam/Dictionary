@@ -26,7 +26,7 @@
         android:id="@+id/editText_word"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20sp"
+        android:layout_marginBottom="10sp"
         android:background="@drawable/round_corner_shape"
         android:ems="10"
         android:inputType="textPersonName"
@@ -47,7 +47,7 @@
         android:id="@+id/editText_meaning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20sp"
+        android:layout_marginBottom="10sp"
         android:background="@drawable/round_corner_shape"
         android:digits="ابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی"
         android:ems="10"
@@ -69,7 +69,7 @@
         android:id="@+id/editText_synonym"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20sp"
+        android:layout_marginBottom="10sp"
         android:background="@drawable/round_corner_shape"
         android:ems="10"
         android:inputType="textPersonName"
@@ -90,17 +90,17 @@
         android:id="@+id/editText_example"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30sp"
+        android:layout_marginBottom="10sp"
         android:background="@drawable/round_corner_shape"
         android:ems="10"
         android:inputType="textPersonName"
         android:padding="16sp" />
-
     <Button
         android:id="@+id/button_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ذخیره"
+        android:textSize="20sp"
         app:cornerRadius="50sp" />
 
 

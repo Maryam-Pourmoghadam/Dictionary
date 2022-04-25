@@ -17,6 +17,7 @@ class AddWordFragment : Fragment() {
     lateinit var binding: FragmentAddWordBinding
     val vmodel: MainViewModel by viewModels()
     var wordID = -1
+    var wikipediaLink = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -45,7 +46,7 @@ class AddWordFragment : Fragment() {
                     0, binding.editTextWord.text.toString(),
                     binding.editTextMeaning.text.toString(),
                     binding.editTextSynonym.text.toString(),
-                    binding.editTextExample.text.toString()
+                    binding.editTextExample.text.toString(),wikipediaLink
                 )
 
                 if (wordID != -1) {
@@ -55,7 +56,8 @@ class AddWordFragment : Fragment() {
                             tempWord.word,
                             tempWord.meaning,
                             tempWord.synonyms,
-                            tempWord.example
+                            tempWord.example,
+                            tempWord.wikipediaLink
                         )
                     )
                 } else {
@@ -68,7 +70,6 @@ class AddWordFragment : Fragment() {
         }
 
 
-
     }
 
     private fun initViews() {
@@ -77,6 +78,7 @@ class AddWordFragment : Fragment() {
         binding.editTextMeaning.setText(word.meaning)
         binding.editTextSynonym.setText(word.synonyms)
         binding.editTextExample.setText(word.example)
+        binding.editTextLink.setText(word.wikipediaLink)
     }
 
     private fun areValidInputs(): Boolean {
@@ -98,6 +100,8 @@ class AddWordFragment : Fragment() {
             binding.editTextSynonym.error = "لطفا فیلد را پر کنید"
             return false
         }
+        if (!binding.editTextLink.text.isNullOrBlank())
+            wikipediaLink = binding.editTextLink.text.toString()
         return true
 
     }

@@ -1,10 +1,13 @@
 package com.example.dictionary
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.dictionary.databinding.FragmentWordDetailsBinding
@@ -12,6 +15,7 @@ import com.example.dictionary.databinding.FragmentWordDetailsBinding
 
 class WordDetailsFragment : Fragment() {
     lateinit var binding:com.example.dictionary.databinding.FragmentWordDetailsBinding
+    lateinit var webView: WebView
     val vmodel: MainViewModel by viewModels()
     var wordID=-1
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +35,15 @@ class WordDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        webView=binding.webViewWikipedia
+        val settings: WebSettings = webView.getSettings()
+        webView.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+                view.loadUrl(url)
+                return false
+            }
+        }
+        webView.setVerticalScrollBarEnabled(true)
         initViews()
 
 
@@ -42,6 +55,12 @@ class WordDetailsFragment : Fragment() {
         binding.buttonDelete.setOnClickListener {
             vmodel.deleteWord(wordID)
             findNavController().navigate(R.id.action_wordDetailsFragment_to_homeFragment)
+        }
+
+        binding.buttonWikipedia.setOnClickListener {
+            webView.visibility=View.VISIBLE
+            //webView.isVerticalScrollBarEnabled = true
+            webView.loadUrl(vmodel.findWordByID(wordID).wikipediaLink)
         }
     }
 
