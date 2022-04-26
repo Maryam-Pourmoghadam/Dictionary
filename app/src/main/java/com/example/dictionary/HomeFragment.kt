@@ -1,9 +1,11 @@
 package com.example.dictionary
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -32,6 +34,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         vmodel.wordsCounterLiveData.observe(viewLifecycleOwner) { number ->
             binding.textViewWordsCounter.text = number.toString()
         }
@@ -42,29 +45,50 @@ class HomeFragment : Fragment() {
 
         binding.buttonSearch.setOnClickListener {
             val word: Word?
-            if (isLanguageChoosed()) {
-                word = if (binding.radioButtonEnglish.isChecked) {
-                    vmodel.findEngWordByName(binding.editTextSearch.text.toString())
-                } else {
-                    vmodel.findPersianWordByName(binding.editTextSearch.text.toString())
-                }
+            if (vmodel.wordsCounterLiveData.value == 0) {
+                showDialog("دیتابیس خالی است")
+            } else {
+                if (isLanguageChoosed()) {
+                    word = if (binding.radioButtonEnglish.isChecked) {
+                        vmodel.findEngWordByName(binding.editTextSearch.text.toString())
+                    } else {
+                        vmodel.findPersianWordByName(binding.editTextSearch.text.toString())
+                    }
 
-                if (word != null) {
-                    val action =
-                        HomeFragmentDirections.actionHomeFragmentToWordDetailsFragment(word.id)
-                    findNavController().navigate(action)
-                } else {
-                    Snackbar.make(
+                    if (word != null) {
+                        val action =
+                            HomeFragmentDirections.actionHomeFragmentToWordDetailsFragment(word.id)
+                        findNavController().navigate(action)
+                    } else {
+                        showDialog("لغت مورد نظر موجود نمی باشد")
+                        /* Snackbar.make(
                         binding.coordinatorLayout,
                         "لغت مورد نظر موجود نمی باشد",
                         Snackbar.LENGTH_SHORT
-                    ).show()
+                    ).show()*/
+
+                    }
+
+
                 }
-
-
             }
 
         }
+    }
+
+    fun showDialog(message: String) {
+        val dialogBuilder = AlertDialog.Builder(requireActivity())
+        dialogBuilder.setMessage(message)
+            // if the dialog is cancelable
+            .setCancelable(false)
+            .setPositiveButton("Ok", DialogInterface.OnClickListener { dialog, id ->
+                dialog.dismiss()
+
+            })
+
+        val alert = dialogBuilder.create()
+        alert.setTitle("هشدار")
+        alert.show()
     }
 
     private fun isLanguageChoosed(): Boolean {

@@ -56,7 +56,8 @@ class AddWordFragment : Fragment() {
                             tempWord.word,
                             tempWord.meaning,
                             tempWord.synonyms,
-                            tempWord.example
+                            tempWord.example,"",
+                            vmodel.findWordByID(wordID).isFavorite
                         )
                     )
                 } else {
