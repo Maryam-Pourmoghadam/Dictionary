@@ -1,5 +1,6 @@
 package com.example.dictionary
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,10 +20,12 @@ class WordDetailsFragment : Fragment() {
     val vmodel: MainViewModel by viewModels()
     var wordID = -1
     var showWebView = false
+    var isFavorite=false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             wordID = it.getInt("id")
+            isFavorite=vmodel.findWordByID(wordID).isFavorite
         }
     }
 
@@ -66,6 +69,18 @@ class WordDetailsFragment : Fragment() {
             }*/
 
         }
+
+        binding.buttonFavorite.setOnClickListener {
+            isFavorite=(!isFavorite)
+            val word=vmodel.findWordByID(wordID)
+            word.isFavorite=isFavorite
+            vmodel.updateWord(word)
+            if (isFavorite) {
+                binding.buttonFavorite.setIconTintResource(R.color.yellow)
+            }else{
+                binding.buttonFavorite.setIconTintResource(R.color.grey)
+            }
+        }
     }
 
     private fun initViews() {
@@ -74,6 +89,9 @@ class WordDetailsFragment : Fragment() {
         binding.textViewMeaning.text = word.meaning
         binding.textViewSynonyms.text = word.synonyms
         binding.textViewExample.text = word.example
+        if (word.isFavorite){
+            binding.buttonFavorite.setIconTintResource(R.color.yellow)
+        }
     }
 
     fun setWebviewSetting() {
