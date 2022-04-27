@@ -76,7 +76,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    fun showDialog(message: String) {
+    private fun showDialog(message: String) {
         val dialogBuilder = AlertDialog.Builder(requireActivity())
         dialogBuilder.setMessage(message)
             // if the dialog is cancelable
