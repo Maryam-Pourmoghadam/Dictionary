@@ -12,9 +12,10 @@ class MainViewModel (app: Application) : AndroidViewModel(app){
     init {
             WordRepository.initDB(app)
         wordsCounterLiveData.value= getNumberOfWords()
+
     }
 
-    fun getAllWords(): LiveData<List<Word>> {
+    fun getAllWords():List<Word> {
         return WordRepository.getAllWords()
     }
 

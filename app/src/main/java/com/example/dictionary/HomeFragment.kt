@@ -34,6 +34,17 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //set listener to items in recyclerView
+        var adapter=ListAdapter( vmodel.getAllWords())
+        binding.rvWordList.adapter=adapter
+        adapter.setOnItemClickListener(object :ListAdapter.onItemClickListener{
+            override fun onItemClick(position: Int) {
+                val id=vmodel.getAllWords()[position].id
+                val action=HomeFragmentDirections.actionHomeFragmentToWordDetailsFragment(id)
+                findNavController().navigate(action)
+            }
+
+        })
 
         vmodel.wordsCounterLiveData.observe(viewLifecycleOwner) { number ->
             binding.textViewWordsCounter.text = number.toString()
