@@ -7,7 +7,7 @@ import androidx.room.*
 interface WordDao{
 
 @Query("SELECT * FROM Word ORDER BY word ASC")
-fun getAllWords():LiveData<List<Word>>
+fun getAllWords():LiveData<List<Word?>?>?
 
 @Query("SELECT COUNT(*)FROM Word")
 fun wordCount():LiveData<Int>

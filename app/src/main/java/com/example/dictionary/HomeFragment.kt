@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.Nullable
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,6 +18,7 @@ import com.google.android.material.snackbar.Snackbar
 class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
     val vmodel: MainViewModel by viewModels()
+    var adapter:ListAdapter?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -34,17 +36,31 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //set listener to items in recyclerView
-        var adapter=ListAdapter( vmodel.getAllWords())
-        binding.rvWordList.adapter=adapter
-        adapter.setOnItemClickListener(object :ListAdapter.onItemClickListener{
-            override fun onItemClick(position: Int) {
-                val id=vmodel.getAllWords()[position].id
-                val action=HomeFragmentDirections.actionHomeFragmentToWordDetailsFragment(id)
-                findNavController().navigate(action)
+        //set observer to livedata list of words and listener to items in recyclerView
+
+        vmodel.allWordsLivedata?.observe(viewLifecycleOwner){
+
+            if (it!=null)
+            {
+                adapter= ListAdapter(it)
+                binding.rvWordList.adapter=adapter
             }
 
-        })
+            adapter?.setOnItemClickListener(object :ListAdapter.onItemClickListener{
+                override fun onItemClick(position: Int) {
+                    val id= vmodel.allWordsLivedata?.value?.get(position)?.id
+                    val action= id?.let {
+                        HomeFragmentDirections.actionHomeFragmentToWordDetailsFragment(
+                            it
+                        )
+                    }
+                    if (action != null) {
+                        findNavController().navigate(action)
+                    }
+                }
+
+            })
+        }
 
         vmodel.wordsCounterLiveData.observe(viewLifecycleOwner) { number ->
             binding.textViewWordsCounter.text = number.toString()

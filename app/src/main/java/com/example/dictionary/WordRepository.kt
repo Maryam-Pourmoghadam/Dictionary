@@ -8,15 +8,15 @@ import com.example.dictionary.database.WordDao
 
 object WordRepository {
     lateinit var wordDao: WordDao
-    lateinit var allWords: LiveData<List<Word>>
+    var allWords: LiveData<List<Word?>?>?=null
     fun initDB(context: Context) {
         val db = AppDatabase.getAppDataBase(context)
         wordDao = db!!.wordDao()
         allWords = wordDao.getAllWords()
     }
 
-    @JvmName("getAllWords1")
-    fun getAllWords():LiveData<List<Word>>{
+
+    fun getAllWord():LiveData<List<Word?>?>?{
         return allWords
     }
 

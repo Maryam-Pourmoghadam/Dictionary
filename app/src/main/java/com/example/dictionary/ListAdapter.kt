@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.dictionary.database.Word
 
 
-class ListAdapter(var dataset: List<Word>) : RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
+class ListAdapter(var dataset: List<Word?>) : RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
 
     lateinit var itemlistener:onItemClickListener
     interface onItemClickListener{
@@ -37,9 +37,9 @@ class ListAdapter(var dataset: List<Word>) : RecyclerView.Adapter<ListAdapter.Li
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        holder.englishTv.text = dataset[position].word
-        holder.persianTv.text = dataset[position].meaning
-        if (dataset[position].isFavorite) {
+        holder.englishTv.text = dataset[position]?.word
+        holder.persianTv.text = dataset[position]?.meaning
+        if (dataset[position]?.isFavorite == true) {
             holder.isFavoriteIcon.setCompoundDrawablesWithIntrinsicBounds(
                 R.drawable.ic_baseline_star_24_yellow,
                 0,
