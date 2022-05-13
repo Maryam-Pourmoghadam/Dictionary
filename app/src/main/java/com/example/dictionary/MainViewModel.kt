@@ -4,16 +4,23 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.dictionary.database.Word
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
-    val wordsCounterLiveData = MutableLiveData(0)
+    val wordsCounterLiveData = MutableLiveData<Int>()
+
     var allWordsLivedata: LiveData<List<Word?>?>?
+    var findEngWordLiveData=MutableLiveData<Word>()
+    var findPerWordLiveData=MutableLiveData<Word>()
 
     init {
         WordRepository.initDB(app)
-        wordsCounterLiveData.value = getNumberOfWords()
         allWordsLivedata = WordRepository.getAllWord()
+        //wordsCounterLiveData.value=getNumberOfWords().value
+
     }
 
     @JvmName("getAllWords1")
@@ -22,33 +29,59 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun addWord(word: Word) {
-        WordRepository.addWord(word)
+        viewModelScope.launch {
+            WordRepository.addWord(word)
+        }
         wordsCounterLiveData.value = wordsCounterLiveData.value?.plus(1)
     }
 
     fun deleteWord(wordID: Int) {
-        WordRepository.deleteWord(wordID)
+        viewModelScope.launch {
+            WordRepository.deleteWord(wordID)
+        }
         wordsCounterLiveData.value = wordsCounterLiveData.value?.minus(1)
     }
 
     fun updateWord(word: Word) {
-        WordRepository.updateWord(word)
+        viewModelScope.launch(Dispatchers.IO) {
+            WordRepository.updateWord(word)
+        }
+
     }
 
-    fun findEngWordByName(name: String): Word {
-        return WordRepository.findEngWordByName(name)
+    fun findEngWordByName(name: String) {
+       // var foundedWord = MutableLiveData<Word>()
+        viewModelScope.launch {
+            val newWord = WordRepository.findEngWordByName(name)
+           // foundedWord.value = newWord  ---> this is false doesnt work
+            //findEngWordLiveData.postValue(newWord) ---> this also works
+            findEngWordLiveData.value=newWord
+        }
+
     }
 
-    fun findPersianWordByName(name: String): Word {
-        return WordRepository.findPersianWordByName(name)
+    fun findPersianWordByName(name: String) {
+        viewModelScope.launch {
+            findPerWordLiveData.value=WordRepository.findPersianWordByName(name)
+        }
+
     }
 
-    fun findWordByID(id: Int): Word {
-        return WordRepository.findWordByID(id)
+    fun findWordByID(id: Int): LiveData<Word?> {
+        var searchWord = MutableLiveData<Word?>()
+        viewModelScope.launch {
+            val newWord = WordRepository.findWordByID(id)
+            searchWord.value = newWord
+        }
+        return searchWord
     }
 
-    fun getNumberOfWords(): Int? {
-        return WordRepository.getNumOfWords()
+     fun getNumberOfWords():LiveData<Int>{
+        var wordCount = MutableLiveData<Int>()
+        viewModelScope.launch {
+            wordCount.value=WordRepository.getNumOfWords()
+        }
+        return wordCount
     }
 
 }

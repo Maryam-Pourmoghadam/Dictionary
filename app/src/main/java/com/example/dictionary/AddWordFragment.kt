@@ -49,20 +49,25 @@ class AddWordFragment : Fragment() {
                     binding.editTextExample.text.toString()
                 )
 
-                if (wordID != -1) {
-                    vmodel.updateWord(
-                        Word(
-                            wordID,
-                            tempWord.word,
-                            tempWord.meaning,
-                            tempWord.synonyms,
-                            tempWord.example,"",
-                            vmodel.findWordByID(wordID).isFavorite
-                        )
-                    )
-                } else {
-                    vmodel.addWord(tempWord)
+                vmodel.findWordByID(wordID).observe(viewLifecycleOwner){
+                    if (wordID != -1) {
+                        if (it != null) {
+                            vmodel.updateWord(
+                                Word(
+                                    wordID,
+                                    tempWord.word,
+                                    tempWord.meaning,
+                                    tempWord.synonyms,
+                                    tempWord.example,"",
+                                    it.isFavorite
+                                )
+                            )
+                        }
+                    } else {
+                        vmodel.addWord(tempWord)
+                    }
                 }
+
                 Toast.makeText(requireContext(), "کلمه با موفقیت ذخیره شد", Toast.LENGTH_SHORT)
                     .show()
                 findNavController().navigate(R.id.action_addWordFragment_to_homeFragment)
@@ -73,11 +78,14 @@ class AddWordFragment : Fragment() {
     }
 
     private fun initViews() {
-        val word = vmodel.findWordByID(wordID)
-        binding.editTextWord.setText(word.word)
-        binding.editTextMeaning.setText(word.meaning)
-        binding.editTextSynonym.setText(word.synonyms)
-        binding.editTextExample.setText(word.example)
+
+        vmodel.findWordByID(wordID).observe(viewLifecycleOwner){
+            binding.editTextWord.setText(it?.word)
+            binding.editTextMeaning.setText(it?.meaning)
+            binding.editTextSynonym.setText(it?.synonyms)
+            binding.editTextExample.setText(it?.example)
+        }
+
     }
 
     private fun areValidInputs(): Boolean {

@@ -18,7 +18,7 @@ import com.google.android.material.snackbar.Snackbar
 class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
     val vmodel: MainViewModel by viewModels()
-    var adapter:ListAdapter?=null
+    var adapter: ListAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -38,18 +38,16 @@ class HomeFragment : Fragment() {
 
         //set observer to livedata list of words and listener to items in recyclerView
 
-        vmodel.allWordsLivedata?.observe(viewLifecycleOwner){
-
-            if (it!=null)
-            {
-                adapter= ListAdapter(it)
-                binding.rvWordList.adapter=adapter
+        vmodel.allWordsLivedata?.observe(viewLifecycleOwner) {
+            if (it != null) {
+                adapter = ListAdapter(it)
+                binding.rvWordList.adapter = adapter
             }
 
-            adapter?.setOnItemClickListener(object :ListAdapter.onItemClickListener{
+            adapter?.setOnItemClickListener(object : ListAdapter.onItemClickListener {
                 override fun onItemClick(position: Int) {
-                    val id= vmodel.allWordsLivedata?.value?.get(position)?.id
-                    val action= id?.let {
+                    val id = vmodel.allWordsLivedata?.value?.get(position)?.id
+                    val action = id?.let {
                         HomeFragmentDirections.actionHomeFragmentToWordDetailsFragment(
                             it
                         )
@@ -62,43 +60,58 @@ class HomeFragment : Fragment() {
             })
         }
 
-        vmodel.wordsCounterLiveData.observe(viewLifecycleOwner) { number ->
+
+        vmodel.findEngWordLiveData.observe(viewLifecycleOwner) {
+            check(it)
+        }
+        vmodel.findPerWordLiveData.observe(viewLifecycleOwner){
+            check(it)
+        }
+        vmodel.getNumberOfWords().observe(viewLifecycleOwner){
+                number ->
             binding.textViewWordsCounter.text = number.toString()
         }
+
+       /* vmodel.wordsCounterLiveData.observe(viewLifecycleOwner) { number ->
+            binding.textViewWordsCounter.text = number.toString()
+        }*/
 
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_addWordFragment)
         }
 
         binding.buttonSearch.setOnClickListener {
-            val word: Word?
+            var word: Word? = null
             if (vmodel.wordsCounterLiveData.value == 0) {
                 showDialog("دیتابیس خالی است")
             } else {
                 if (isLanguageChoosed()) {
-                    word = if (binding.radioButtonEnglish.isChecked) {
-                        vmodel.findEngWordByName(binding.editTextSearch.text.toString())
+                    val input = binding.editTextSearch.text.toString()
+                    if (binding.radioButtonEnglish.isChecked) {
+                        vmodel.findEngWordByName(input)
                     } else {
-                        vmodel.findPersianWordByName(binding.editTextSearch.text.toString())
+                        vmodel.findPersianWordByName(input)
                     }
-
-                    if (word != null) {
-                        val action =
-                            HomeFragmentDirections.actionHomeFragmentToWordDetailsFragment(word.id)
-                        findNavController().navigate(action)
-                    } else {
-                        showDialog("لغت مورد نظر موجود نمی باشد")
-                        /* Snackbar.make(
-                        binding.coordinatorLayout,
-                        "لغت مورد نظر موجود نمی باشد",
-                        Snackbar.LENGTH_SHORT
-                    ).show()*/
-
-                    }
-
 
                 }
             }
+
+        }
+    }
+
+    fun check(word: Word?) {
+
+        if (word != null) {
+            val action =
+                HomeFragmentDirections.actionHomeFragmentToWordDetailsFragment(word!!.id)
+            findNavController().navigate(action)
+        } else {
+            showDialog("لغت مورد نظر موجود نمی باشد")
+            /* Snackbar.make(
+            binding.coordinatorLayout,
+            "لغت مورد نظر موجود نمی باشد",
+            Snackbar.LENGTH_SHORT
+        ).show()*/
 
         }
     }

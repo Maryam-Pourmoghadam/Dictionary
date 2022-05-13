@@ -15,3 +15,5 @@ data class Word(@PrimaryKey(autoGenerate = true)val id:Int,
 
     }
 }
+
+

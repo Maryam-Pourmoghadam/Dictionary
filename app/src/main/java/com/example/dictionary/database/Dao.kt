@@ -13,26 +13,26 @@ fun getAllWords():LiveData<List<Word?>?>?
 fun wordCount():LiveData<Int>
 
 @Insert(onConflict = OnConflictStrategy.REPLACE)
-fun insertWord(word: Word)
+suspend fun insertWord(word: Word)
 
 @Query("DELETE FROM Word WHERE id=:wordID")
-fun deleteWord(wordID:Int)
+suspend fun deleteWord(wordID:Int)
 
 @Update
-fun updateWord(word: Word)
+suspend fun updateWord(word: Word)
 
 @Query("DELETE FROM Word")
-fun deleteTable()
+suspend fun deleteTable()
 
 @Query("SELECT * FROM Word WHERE word IN (:engWord)" )
-fun findEnglishWord(engWord:String):Word
+suspend fun findEnglishWord(engWord:String):Word
 
 @Query("SELECT * FROM Word WHERE meaning IN(:persianWord)")
-fun findPersianWord(persianWord:String):Word
+suspend fun findPersianWord(persianWord:String):Word
 
 @Query("SELECT * FROM Word WHERE id IN (:wordID)")
-fun findByID(wordID:Int):Word
+suspend fun findByID(wordID:Int):Word
 
 @Query("SELECT COUNT(*) FROM Word")
-fun getNumberOfWords():Int?
+suspend fun getNumberOfWords():Int?
 }

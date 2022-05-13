@@ -20,31 +20,31 @@ object WordRepository {
         return allWords
     }
 
-    fun addWord(word:Word){
+    suspend fun addWord(word:Word){
         wordDao.insertWord(word)
     }
 
-    fun updateWord(word: Word){
+    suspend fun updateWord(word: Word){
         wordDao.updateWord(word)
     }
 
-    fun deleteWord(wordID: Int){
+    suspend fun deleteWord(wordID: Int){
         wordDao.deleteWord(wordID)
     }
 
-    fun findEngWordByName(name: String):Word{
+    suspend fun findEngWordByName(name: String):Word{
         return wordDao.findEnglishWord(name)
     }
 
-    fun findPersianWordByName(name: String):Word{
+    suspend fun findPersianWordByName(name: String):Word{
         return wordDao.findPersianWord(name)
     }
 
-    fun findWordByID(id:Int):Word{
+    suspend fun findWordByID(id:Int):Word{
         return wordDao.findByID(id)
     }
 
-    fun getNumOfWords():Int?{
+    suspend fun getNumOfWords():Int?{
         return wordDao.getNumberOfWords()
     }
 
